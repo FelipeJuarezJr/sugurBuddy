@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-dark-bg text-white;
+    overflow-x: hidden;
+  }
+}
+
+/* Star particle background effect */
+.star-field {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s infinite;
+  opacity: 0.6;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Translucent card glow effect */
+.card-glow {
+  background: rgba(3, 1, 5, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(138, 43, 226, 0.3);
+}
+
+/* Button gradient hover effect */
+.btn-gradient:hover {
+  background: linear-gradient(180deg, #9A3CE2 0%, #7A10C0 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(138, 43, 226, 0.4);
+}
+
