@@ -73,7 +73,7 @@ function HomeDashboard() {
       sessionStorage.clear();
       // Force page reload to trigger App.jsx to detect no authentication
       window.location.href = '/';
-    }, 500); // Show message for 0.5 seconds
+    }, 1500); // Show message for 1.5 seconds
   };
 
   return (
