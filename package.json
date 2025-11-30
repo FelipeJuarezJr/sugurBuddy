@@ -4,6 +4,8 @@
   "private": true,
   "description": "A mobile-first diabetes habit tracker",
   "dependencies": {
+    "@azure/msal-browser": "^4.26.2",
+    "@azure/msal-react": "^3.0.22",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -22,4 +24,3 @@
     "preview": "vite preview"
   }
 }
-

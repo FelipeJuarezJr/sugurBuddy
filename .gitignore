@@ -18,6 +18,10 @@ node_modules/
 # Misc
 .DS_Store
 
+# Documentation (ignore all .md files except README.md)
+*.md
+!README.md
+
 # Logs
 npm-debug.log*
 yarn-debug.log*

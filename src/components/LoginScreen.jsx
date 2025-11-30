@@ -1,8 +1,29 @@
 import { useState } from 'react'
+import { useMsal } from '@azure/msal-react'
+import { loginRequest } from '../config/msalConfig'
 
 function LoginScreen({ onSwitchToRegister }) {
+  const { instance } = useMsal()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const handleMicrosoftLogin = async () => {
+    try {
+      // Force account selection by using select_account prompt
+      await instance.loginPopup({
+        ...loginRequest,
+        prompt: 'select_account', // Show account picker to choose different accounts
+      })
+      // After successful login, the App component will detect authentication
+      // and automatically show the HomeDashboard
+    } catch (error) {
+      console.error('Microsoft login error:', error)
+      // User cancelled the login popup
+      if (error.errorCode !== 'user_cancelled') {
+        // You can add error handling UI here if needed
+      }
+    }
+  }
 
   // Generate random stars for background
   const stars = Array.from({ length: 50 }, (_, i) => ({
@@ -122,6 +143,7 @@ function LoginScreen({ onSwitchToRegister }) {
           {/* Microsoft Login Button */}
           <button
             type="button"
+            onClick={handleMicrosoftLogin}
             className="w-full bg-card-dark/80 border border-purple-medium/30 rounded-xl py-4 text-white font-semibold hover:bg-card-dark transition-all duration-200 flex items-center justify-center gap-3"
           >
             <svg
