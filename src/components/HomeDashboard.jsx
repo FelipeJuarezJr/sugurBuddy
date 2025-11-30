@@ -15,6 +15,7 @@ function HomeDashboard() {
   const { instance, accounts } = useMsal();
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loggingOut, setLoggingOut] = useState(false);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -57,11 +58,21 @@ function HomeDashboard() {
   }, [accounts, instance]);
 
   const handleLogout = () => {
-    // Logout and clear account selection so user can choose different account next time
-    instance.logoutPopup({
-      account: instance.getActiveAccount(),
-      postLogoutRedirectUri: window.location.origin,
-    });
+    // Show "Logged Out" message
+    setLoggingOut(true);
+    
+    // Clear the account and cache after a brief moment
+    setTimeout(() => {
+      const account = instance.getActiveAccount();
+      if (account) {
+        instance.setActiveAccount(null);
+      }
+      // Clear MSAL cache
+      instance.clearCache();
+      // Clear session storage
+      sessionStorage.clear();
+      // Redirect will happen automatically via App.jsx detecting no authentication
+    }, 1500); // Show message for 1.5 seconds
   };
 
   return (
@@ -86,18 +97,32 @@ function HomeDashboard() {
 
       {/* Main content */}
       <div className="relative z-10 w-full max-w-4xl">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
-            SugarBuddy
-          </h1>
-          <p className="text-text-grey text-sm md:text-base">
-            Your diabetes habit tracker
-          </p>
-        </div>
+        {/* Logged Out Message */}
+        {loggingOut ? (
+          <div className="text-center">
+            <div className="card-glow rounded-2xl p-8 mb-6">
+              <h2 className="text-3xl font-bold text-white mb-4">
+                Logged Out
+              </h2>
+              <p className="text-text-grey">
+                Redirecting to login...
+              </p>
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Header */}
+            <div className="text-center mb-8">
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+                SugarBuddy
+              </h1>
+              <p className="text-text-grey text-sm md:text-base">
+                Your diabetes habit tracker
+              </p>
+            </div>
 
-        {/* Dashboard Card */}
-        <div className="card-glow rounded-2xl p-6 md:p-8 mb-6">
+            {/* Dashboard Card */}
+            <div className="card-glow rounded-2xl p-6 md:p-8 mb-6">
           {/* User Info */}
           <div className="mb-6 pb-6 border-b border-purple-medium/30">
             <div className="flex items-center justify-between flex-wrap gap-4">
@@ -201,7 +226,9 @@ function HomeDashboard() {
               </p>
             </div>
           </div>
-        </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
