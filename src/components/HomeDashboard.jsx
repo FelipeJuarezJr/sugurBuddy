@@ -71,8 +71,9 @@ function HomeDashboard() {
       instance.clearCache();
       // Clear session storage
       sessionStorage.clear();
-      // Redirect will happen automatically via App.jsx detecting no authentication
-    }, 1500); // Show message for 1.5 seconds
+      // Force page reload to trigger App.jsx to detect no authentication
+      window.location.href = '/';
+    }, 500); // Show message for 0.5 seconds
   };
 
   return (
