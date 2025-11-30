@@ -197,7 +197,7 @@ function HomeDashboard() {
 
             <div className="mt-6 pt-6 border-t border-purple-medium/30">
               <p className="text-text-grey text-center text-sm">
-                Dashboard features coming soon...
+                Dashboard features Coming Soon...
               </p>
             </div>
           </div>
